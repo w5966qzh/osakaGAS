@@ -43,9 +43,9 @@ class Sheet {
       return Array.isArray(item[colName])? item[colName].join(';'):item[colName]
     })
     if(index<0){
-      this.sheet.getRange(index+2,1,1,this.columns.length).setValues([newRow])      
-    }else{
       this.sheet.appendRow(newRow)
+    }else{
+      this.sheet.getRange(index+2,1,1,this.columns.length).setValues([newRow])
     }
   }
 
