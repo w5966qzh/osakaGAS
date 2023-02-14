@@ -1,6 +1,6 @@
 class Sheet {
   constructor({sheetName,spreadsheetId,spreadsheetUrl,key列名}){
-    if(!!sheetName&&!!sheetName){
+    if(!!sheetName&&!!spreadsheetId){
       this.sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(sheetName)
     }else if(!!sheetName){
       try{
