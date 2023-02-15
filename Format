@@ -102,18 +102,21 @@ class Format {
   }
 
   _setValueToColumn(rowIndex, columnName, value) {
+    if(rowIndex<0){
+      console.log('渡されたデータにkeyとなる値がありません')
+    }
     this.sheet.getRange(
       rowIndex + 2,
       this.columns.findIndex(colName => colName === columnName) + 1
     ).setValue(value)
   }
 
-  データからスプシフォーマットの作成だけ実行(ID, data, newFileName) {
+  データからスプシフォーマットの作成だけ実行(data, newFileName) {
     const スプシフォーマットURL = this._ひな型をコピーしてスプシフォーマットを作成(newFileName)
     this._スプシフォーマットに値をセット(スプシフォーマットURL, data)
 
     // 管理表にupdatedAtやspreadsheetURLをセット
-    const rowIndex = this.items.findIndex(item => item[this.key列名] === ID)
+    const rowIndex = Object.keys(this.docs).findIndex(key=>key===data[this.key列名])
     this._setValueToColumn(rowIndex, 'updatedAt', new Date())
     this._setValueToColumn(rowIndex, 'spreadsheetURL', スプシフォーマットURL)
   }
@@ -129,8 +132,8 @@ class Format {
   }
 
 
-  スプシフォーマット更新から書面作成まで実行(data, newFileName) {
-    const { spreadsheetURL, pdfID } = this.docs[this.key列名]
+  スプシフォーマット更新とpdf作成の両方実行(data, newFileName) {
+    const { spreadsheetURL, pdfID } = this.docs[data[this.key列名]]
 
     // スプシフォーマットとデータの値に違いがなければ、処理は進めない
     if (!this._スプシフォーマットとデータの値に違いがあるか(data, spreadsheetURL)) {
