@@ -1,8 +1,8 @@
 class Sheet {
   constructor({sheetName,spreadsheetId,spreadsheetUrl,key列名}){
-    if(!!sheetName&&!!spreadsheetId){
+    if(sheetName&&spreadsheetId){
       this.sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(sheetName)
-    }else if(!!sheetName){
+    }else if(sheetName){
       try{
         this.sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName)
       }catch{
@@ -11,13 +11,14 @@ class Sheet {
     }else if(spreadsheetId){
       this.sheet = SpreadsheetApp.openById(spreadsheetId).getActiveSheet()
     }else if(spreadsheetUrl){
-      this.sheet =  SpreadsheetApp.openByUrl(spreadsheetUrl).spreadsheet.getActiveSheet()
+      this.sheet =  SpreadsheetApp.openByUrl(spreadsheetUrl).getActiveSheet()
     }else{
       console.log('spreadsheetId、sheetName、spreadsheetUrlのいずれかを指定してください')
     }
 
     const rows=this.sheet.getDataRange().getValues()
     this.columns=rows.shift()
+    this.values = rows
 
     this.items = rows.map(row=>{
       return this.columns.reduce((item,columnName,idx)=>{
